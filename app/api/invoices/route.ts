@@ -133,10 +133,10 @@ export async function POST(request: NextRequest) {
 
     // Auto-generate invoice number template: [Business Prefix]-[Month of bill]-[Year of billing]-[Serial number]
     // Rule: Multi-word (has spaces) -> Initials (e.g. Somay Engineering -> SE)
-    // Single word (no spaces) -> Full Name in CAPS (e.g. Manage-o-Pedia -> MANAGE-O-PEDIA)
+    // Single word (no spaces) -> Full Name in CAPS (e.g. SUTRA -> SUTRA)
     let invoiceNumber = customInvNum;
     if (!invoiceNumber) {
-      let prefix = "MOP";
+      let prefix = "SUTRA";
       if (companyName && companyName.trim()) {
         const words = companyName.trim().split(/\s+/).filter(Boolean);
         if (words.length > 1) {

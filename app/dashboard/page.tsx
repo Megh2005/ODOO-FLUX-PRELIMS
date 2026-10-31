@@ -54,7 +54,9 @@ export default function DashboardPage() {
   const totalSales = Number(data?.stats?.totalSales || 0);
   const totalPaid = Number(data?.stats?.totalPaid || 0);
   const totalDue = Number(data?.stats?.totalDue || 0);
-  const totalPurchaseValuation = Number(data?.stats?.totalPurchaseValuation || 0);
+  const totalPurchaseValuation = Number(
+    data?.stats?.totalPurchaseValuation || 0,
+  );
 
   const hasSalesData = totalSales > 0;
 
@@ -110,15 +112,25 @@ export default function DashboardPage() {
       }
       return (
         <div className="bg-slate-900 text-white text-xs p-3 rounded-xl shadow-lg border border-slate-700 space-y-1">
-          <p className="font-bold flex items-center gap-1.5" style={{ color: itemData.color }}>
-            <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: itemData.color }} />
+          <p
+            className="font-bold flex items-center gap-1.5"
+            style={{ color: itemData.color }}
+          >
+            <span
+              className="w-2 h-2 rounded-full inline-block"
+              style={{ backgroundColor: itemData.color }}
+            />
             {itemData.name}
           </p>
           <p className="font-mono font-bold text-sm">
-            ₹ {Number(itemData.value).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+            ₹{" "}
+            {Number(itemData.value).toLocaleString("en-IN", {
+              minimumFractionDigits: 2,
+            })}
           </p>
           <p className="text-[10px] text-slate-400">
-            {((Number(itemData.value) / totalSales) * 100).toFixed(1)}% of total sales revenue
+            {((Number(itemData.value) / totalSales) * 100).toFixed(1)}% of total
+            sales revenue
           </p>
         </div>
       );
@@ -134,9 +146,9 @@ export default function DashboardPage() {
           <div className="space-y-1.5 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold">
               <TbSparkles className="w-3.5 h-3.5" />
-              <span>Manage-o-Pedia Management Console</span>
+              <span>Sutra Management Console</span>
             </div>
-            <h1 className="text-2xl font-black tracking-tight text-white">
+            <h1 className="text-2xl font-black  text-white">
               Enterprise Inventory & Billing Overview
             </h1>
             <p className="text-xs text-slate-300 leading-relaxed">
@@ -171,12 +183,16 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-slate-900 tracking-tight">
-              {loading ? "..." : `₹ ${totalPurchaseValuation.toLocaleString("en-IN")}`}
+            <div className="text-2xl font-black text-slate-900 ">
+              {loading
+                ? "..."
+                : `₹ ${totalPurchaseValuation.toLocaleString("en-IN")}`}
             </div>
             <div className="flex items-center gap-1.5 mt-2">
               <span className="inline-block w-2 h-2 rounded-full bg-blue-500" />
-              <p className="text-[11px] text-slate-500">Cost value of current inventory</p>
+              <p className="text-[11px] text-slate-500">
+                Cost value of current inventory
+              </p>
             </div>
           </div>
         </div>
@@ -192,13 +208,15 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-emerald-700 tracking-tight">
+            <div className="text-2xl font-black text-emerald-700 ">
               {loading ? "..." : `₹ ${totalPaid.toLocaleString("en-IN")}`}
             </div>
             <div className="flex items-center gap-1.5 mt-2">
               <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
               <p className="text-[11px] text-slate-500">
-                {hasSalesData ? `${paidPercentage}% of total sales collected` : "Total received payment"}
+                {hasSalesData
+                  ? `${paidPercentage}% of total sales collected`
+                  : "Total received payment"}
               </p>
             </div>
           </div>
@@ -215,13 +233,15 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className="mt-3">
-            <div className="text-2xl font-black text-amber-700 tracking-tight">
+            <div className="text-2xl font-black text-amber-700 ">
               {loading ? "..." : `₹ ${totalDue.toLocaleString("en-IN")}`}
             </div>
             <div className="flex items-center gap-1.5 mt-2">
               <span className="inline-block w-2 h-2 rounded-full bg-amber-500" />
               <p className="text-[11px] text-slate-500">
-                {hasSalesData ? `${duePercentage}% pending collection` : "Total pending dues"}
+                {hasSalesData
+                  ? `${duePercentage}% pending collection`
+                  : "Total pending dues"}
               </p>
             </div>
           </div>
@@ -234,10 +254,13 @@ export default function DashboardPage() {
           <div>
             <div className="flex items-center gap-2">
               <TbChartPie className="w-5 h-5 text-amber-600" />
-              <h3 className="font-bold text-sm text-slate-900">Sales Revenue Breakdown (Paid vs. Due)</h3>
+              <h3 className="font-bold text-sm text-slate-900">
+                Sales Revenue Breakdown (Paid vs. Due)
+              </h3>
             </div>
             <p className="text-xs text-slate-500 mt-0.5">
-              Visual distribution of settled payments versus outstanding receivables
+              Visual distribution of settled payments versus outstanding
+              receivables
             </p>
           </div>
 
@@ -247,7 +270,12 @@ export default function DashboardPage() {
                 Total Sales Revenue
               </span>
               <span className="text-base font-black text-slate-900">
-                ₹ {loading ? "..." : totalSales.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                ₹{" "}
+                {loading
+                  ? "..."
+                  : totalSales.toLocaleString("en-IN", {
+                      minimumFractionDigits: 2,
+                    })}
               </span>
             </div>
           </div>
@@ -260,22 +288,46 @@ export default function DashboardPage() {
               <RechartsPieChart>
                 <defs>
                   {/* Paid Slice 3D Gradient */}
-                  <linearGradient id="paid3DGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <linearGradient
+                    id="paid3DGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
                     <stop offset="0%" stopColor="#34d399" />
                     <stop offset="50%" stopColor="#10b981" />
                     <stop offset="100%" stopColor="#047857" />
                   </linearGradient>
 
                   {/* Due Slice 3D Gradient */}
-                  <linearGradient id="due3DGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <linearGradient
+                    id="due3DGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
                     <stop offset="0%" stopColor="#fbbf24" />
                     <stop offset="50%" stopColor="#f59e0b" />
                     <stop offset="100%" stopColor="#b45309" />
                   </linearGradient>
 
                   {/* 3D Soft Drop Shadow Filter */}
-                  <filter id="pie3dShadow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="2" dy="5" stdDeviation="4" floodColor="#0f172a" floodOpacity="0.16" />
+                  <filter
+                    id="pie3dShadow"
+                    x="-20%"
+                    y="-20%"
+                    width="140%"
+                    height="140%"
+                  >
+                    <feDropShadow
+                      dx="2"
+                      dy="5"
+                      stdDeviation="4"
+                      floodColor="#0f172a"
+                      floodOpacity="0.16"
+                    />
                   </filter>
                 </defs>
                 <Pie
@@ -327,13 +379,20 @@ export default function DashboardPage() {
               <div className="space-y-0.5">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-emerald-500 shrink-0" />
-                  <span className="text-xs font-bold text-emerald-950">Paid Sales Revenue</span>
+                  <span className="text-xs font-bold text-emerald-950">
+                    Paid Sales Revenue
+                  </span>
                 </div>
-                <p className="text-[11px] text-emerald-700 pl-5">Successfully collected payments</p>
+                <p className="text-[11px] text-emerald-700 pl-5">
+                  Successfully collected payments
+                </p>
               </div>
               <div className="text-right">
                 <div className="text-sm font-black text-emerald-800 font-mono">
-                  ₹ {totalPaid.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                  ₹{" "}
+                  {totalPaid.toLocaleString("en-IN", {
+                    minimumFractionDigits: 2,
+                  })}
                 </div>
                 <div className="text-[10px] font-bold text-emerald-600">
                   {paidPercentage}% of Total
@@ -346,13 +405,20 @@ export default function DashboardPage() {
               <div className="space-y-0.5">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-amber-500 shrink-0" />
-                  <span className="text-xs font-bold text-amber-950">Outstanding Due Sales</span>
+                  <span className="text-xs font-bold text-amber-950">
+                    Outstanding Due Sales
+                  </span>
                 </div>
-                <p className="text-[11px] text-amber-700 pl-5">Pending customer collection</p>
+                <p className="text-[11px] text-amber-700 pl-5">
+                  Pending customer collection
+                </p>
               </div>
               <div className="text-right">
                 <div className="text-sm font-black text-amber-800 font-mono">
-                  ₹ {totalDue.toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                  ₹{" "}
+                  {totalDue.toLocaleString("en-IN", {
+                    minimumFractionDigits: 2,
+                  })}
                 </div>
                 <div className="text-[10px] font-bold text-amber-600">
                   {duePercentage}% of Total
@@ -375,11 +441,19 @@ export default function DashboardPage() {
       <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="font-bold text-sm text-slate-900">Recent Generated Invoices</h3>
-            <p className="text-xs text-slate-500">Latest issued billing documents</p>
+            <h3 className="font-bold text-sm text-slate-900">
+              Recent Generated Invoices
+            </h3>
+            <p className="text-xs text-slate-500">
+              Latest issued billing documents
+            </p>
           </div>
           <Link href="/invoices">
-            <Button variant="ghost" size="sm" className="gap-1 text-xs text-slate-600 hover:text-slate-900 font-bold">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1 text-xs text-slate-600 hover:text-slate-900 font-bold"
+            >
               <span>View All Invoices</span>
               <TbArrowUpRight className="w-3.5 h-3.5" />
             </Button>
@@ -401,20 +475,30 @@ export default function DashboardPage() {
             <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-slate-400">Loading invoices...</td>
+                  <td colSpan={6} className="py-8 text-center text-slate-400">
+                    Loading invoices...
+                  </td>
                 </tr>
               ) : !data?.recentInvoices || data.recentInvoices.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-8 text-center text-slate-400">No recent invoices recorded.</td>
+                  <td colSpan={6} className="py-8 text-center text-slate-400">
+                    No recent invoices recorded.
+                  </td>
                 </tr>
               ) : (
                 data.recentInvoices.map((inv: any) => (
-                  <tr key={inv._id} className="hover:bg-slate-50 transition-colors">
+                  <tr
+                    key={inv._id}
+                    className="hover:bg-slate-50 transition-colors"
+                  >
                     <td className="py-3 px-4 font-semibold text-slate-600">
                       {inv.documentType.replace("_", " ")}
                     </td>
                     <td className="py-3 px-3 font-bold text-slate-900">
-                      <Link href={`/invoices/${inv._id}`} className="hover:underline text-blue-600">
+                      <Link
+                        href={`/invoices/${inv._id}`}
+                        className="hover:underline text-blue-600"
+                      >
                         {inv.invoiceNumber}
                       </Link>
                     </td>
@@ -425,7 +509,10 @@ export default function DashboardPage() {
                       {new Date(inv.issueDate).toLocaleDateString("en-IN")}
                     </td>
                     <td className="py-3 px-3 text-right font-black text-slate-900">
-                      ₹ {Number(inv.grandTotal).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                      ₹{" "}
+                      {Number(inv.grandTotal).toLocaleString("en-IN", {
+                        minimumFractionDigits: 2,
+                      })}
                     </td>
                     <td className="py-3 px-4 text-center">
                       <span
@@ -433,10 +520,10 @@ export default function DashboardPage() {
                           inv.status === "PAID"
                             ? "bg-emerald-100 text-emerald-800"
                             : inv.status === "ISSUED"
-                            ? "bg-blue-100 text-blue-800"
-                            : inv.status === "CANCELLED"
-                            ? "bg-rose-100 text-rose-800"
-                            : "bg-slate-100 text-slate-800"
+                              ? "bg-blue-100 text-blue-800"
+                              : inv.status === "CANCELLED"
+                                ? "bg-rose-100 text-rose-800"
+                                : "bg-slate-100 text-slate-800"
                         }`}
                       >
                         {inv.status}

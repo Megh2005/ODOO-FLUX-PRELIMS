@@ -139,7 +139,7 @@ function CreateInvoiceContent() {
   const [gstCalculationMode, setGstCalculationMode] = useState<"ITEMIZED" | "OVERALL">("ITEMIZED");
   const [overallGstRate, setOverallGstRate] = useState<number>(18);
   const [gstPercentage, setGstPercentage] = useState(18);
-  const [notes, setNotes] = useState("Thank you for choosing Manage-o-Pedia!");
+  const [notes, setNotes] = useState("Thank you for choosing us!");
   const [termsAndConditions, setTermsAndConditions] = useState(
     "1. Payment is due as per terms.\n2. Goods once sold will not be taken back."
   );
