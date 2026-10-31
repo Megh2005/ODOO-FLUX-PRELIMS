@@ -14,6 +14,22 @@ export function verifyPassword(password: string, salt: string, hash: string): bo
   return hash === verifyHash;
 }
 
+export function validateCustomerPassword(password: string): { valid: boolean; error?: string } {
+  if (!password || password.length <= 8) {
+    return { valid: false, error: "Password must contain more than 8 characters (minimum 9 characters)" };
+  }
+  if (!/[A-Z]/.test(password)) {
+    return { valid: false, error: "Password must contain at least one uppercase letter" };
+  }
+  if (!/[a-z]/.test(password)) {
+    return { valid: false, error: "Password must contain at least one lowercase letter" };
+  }
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(password)) {
+    return { valid: false, error: "Password must contain at least one special character" };
+  }
+  return { valid: true };
+}
+
 export async function getSession() {
   return await getServerSession(authOptions);
 }
@@ -24,12 +40,28 @@ export async function requireAuth(): Promise<{ userId: string; companyId: string
   if (!session || !session.user || !(session.user as any).id) {
     throw new Error("UNAUTHORIZED");
   }
+  if ((session.user as any).role === "CUSTOMER") {
+    throw new Error("FORBIDDEN_CUSTOMER");
+  }
   if (!(session.user as any).companyId) {
     throw new Error("NO_COMPANY");
   }
   return {
     userId: (session.user as any).id,
     companyId: (session.user as any).companyId,
+  };
+}
+
+export async function requireCustomerAuth(): Promise<{ userId: string; email: string; customerId?: string }> {
+  await connectToDatabase();
+  const session = await getSession();
+  if (!session || !session.user || !(session.user as any).id) {
+    throw new Error("UNAUTHORIZED");
+  }
+  return {
+    userId: (session.user as any).id,
+    email: (session.user as any).email || "",
+    customerId: (session.user as any).customerId,
   };
 }
 
