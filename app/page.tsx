@@ -13,13 +13,19 @@ import { Button } from "@/components/ui/button";
 
 export default function LandingPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userRole, setUserRole] = useState<string>("BUSINESS");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/auth/me")
       .then((res) => {
-        if (res.ok) {
+        if (res.ok) return res.json();
+        return null;
+      })
+      .then((data) => {
+        if (data && data.success) {
           setIsAuthenticated(true);
+          setUserRole(data.user?.role || "BUSINESS");
         }
       })
       .finally(() => {
@@ -57,9 +63,9 @@ export default function LandingPage() {
                 Loading...
               </Button>
             ) : isAuthenticated ? (
-              <Link href="/dashboard">
+              <Link href={userRole === "CUSTOMER" ? "/portal" : "/dashboard"}>
                 <Button size="lg" variant="default">
-                  <span>Open Business Console</span>
+                  <span>{userRole === "CUSTOMER" ? "Open Customer Portal" : "Open Business Console"}</span>
                   <TbArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
@@ -67,13 +73,13 @@ export default function LandingPage() {
               <>
                 <Link href="/login">
                   <Button size="lg" variant="default">
-                    <span>Get Started Free</span>
+                    <span>Business Console</span>
                     <TbArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
                 <Link href="/login">
                   <Button size="lg" variant="secondary">
-                    Sign In
+                    Customer Portal
                   </Button>
                 </Link>
               </>
