@@ -55,24 +55,24 @@ export async function POST(request: NextRequest) {
     // Send verification email via Nodemailer SMTP
     const mailResult = await sendMail({
       to: email.toLowerCase(),
-      subject: "Manage-o-Pedia OTP Code",
+      subject: "SUTRA OTP Code",
       text:
-        `MANAGE-O-PEDIA VERIFICATION\n\n` +
+        `SUTRA VERIFICATION\n\n` +
         `Hello ${name.trim()},\n\n` +
         `Your 6-digit OTP verification code is: ${otp}\n` +
         `This code is valid for 5 minutes.\n\n` +
-        `— Manage-o-Pedia System`,
+        `— SUTRA System`,
       html: `
         <div style="font-family:'Courier New', Courier, monospace; color:#000000; background:#ffffff; border:1px solid #000000; padding:20px; max-width:500px;">
-          <h2 style="font-family:'Courier New', Courier, monospace; margin:0 0 16px 0; font-size:16px; border-bottom:1px solid #000000; padding-bottom:8px; color:#000000;">MANAGE-O-PEDIA USER REGISTRATION</h2>
+          <h2 style="font-family:'Courier New', Courier, monospace; margin:0 0 16px 0; font-size:16px; border-bottom:1px solid #000000; padding-bottom:8px; color:#000000;">SUTRA USER REGISTRATION</h2>
           <p style="font-family:'Courier New', Courier, monospace; margin:0 0 12px 0; color:#000000;">Hello <strong>${name.trim()}</strong>,</p>
-          <p style="font-family:'Courier New', Courier, monospace; margin:0 0 12px 0; color:#000000;">Thank you for registering with Manage-o-Pedia.</p>
+          <p style="font-family:'Courier New', Courier, monospace; margin:0 0 12px 0; color:#000000;">Thank you for registering with SUTRA.</p>
           <div style="border:1px solid #000000; padding:12px; text-align:center; margin:16px 0; background:#ffffff; color:#000000;">
             <p style="font-family:'Courier New', Courier, monospace; margin:0; font-size:12px; font-weight:bold; color:#000000;">YOUR 6-DIGIT OTP CODE:</p>
             <p style="font-family:'Courier New', Courier, monospace; margin:8px 0 0 0; font-size:24px; font-weight:bold; letter-spacing:4px; color:#000000;">${otp}</p>
           </div>
           <p style="font-family:'Courier New', Courier, monospace; margin:0 0 12px 0; font-size:11px; color:#000000;">This code will expire in 5 minutes.</p>
-          <p style="font-family:'Courier New', Courier, monospace; margin:16px 0 0 0; border-top:1px solid #000000; padding-top:8px; font-size:11px; color:#000000;">Regards,<br/>Manage-o-Pedia System</p>
+          <p style="font-family:'Courier New', Courier, monospace; margin:16px 0 0 0; border-top:1px solid #000000; padding-top:8px; font-size:11px; color:#000000;">Regards,<br/>SUTRA System</p>
         </div>
       `,
     });

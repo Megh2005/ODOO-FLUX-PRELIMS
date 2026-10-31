@@ -126,7 +126,7 @@ export async function sendMail(payload: MailPayload): Promise<MailResult> {
     const formattedHtml = formatMonospaceBlackAndWhiteHtml(html, text);
 
     const info = await transporter.sendMail({
-      from: `"Manage-o-Pedia" <${fromAddress}>`,
+      from: `"SUTRA" <${fromAddress}>`,
       to,
       subject,
       text,

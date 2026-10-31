@@ -20,7 +20,7 @@ export async function sendLowStockNotificationEmail(
   const html = `
     <div style="font-family:'Courier New', Courier, monospace; max-width:600px; margin:0 auto; border:2px solid #000000; padding:20px; background:#ffffff; color:#000000;">
       <div style="background:#000000; color:#ffffff; padding:16px; text-align:center; border:1px solid #000000; margin-bottom:20px;">
-        <h2 style="margin:0; font-size:18px; font-weight:bold; font-family:'Courier New', Courier, monospace; letter-spacing:1px; color:#ffffff;">MANAGE-O-PEDIA</h2>
+        <h2 style="margin:0; font-size:18px; font-weight:bold; font-family:'Courier New', Courier, monospace; letter-spacing:1px; color:#ffffff;">SUTRA</h2>
         <p style="margin:4px 0 0; font-size:12px; font-family:'Courier New', Courier, monospace; color:#ffffff;">INVENTORY ALERT SYSTEM</p>
       </div>
 
@@ -56,19 +56,19 @@ export async function sendLowStockNotificationEmail(
       </p>
 
       <div style="border-top:1px solid #000000; margin-top:20px; padding-top:12px; text-align:center; font-size:11px; font-family:'Courier New', Courier, monospace;">
-        Automated Monospace System • Manage-o-Pedia
+        Automated Monospace System • SUTRA
       </div>
     </div>
   `;
 
   const text =
-    `MANAGE-O-PEDIA - LOW STOCK ALERT\n\n` +
+    `SUTRA - LOW STOCK ALERT\n\n` +
     `Product: ${productName}\n` +
     `Current Stock: ${currentStock} ${unit}\n` +
     `Minimum Threshold: ${minimumStockQuantity} ${unit}\n` +
     `Category: ${category}` +
     (sku ? `\nSKU: ${sku}` : "") +
-    `\n\nPlease reorder stock soon to avoid project delays.\n\n— Manage-o-Pedia System`;
+    `\n\nPlease reorder stock soon to avoid project delays.\n\n— SUTRA System`;
 
   let toEmail: string | undefined;
   if (companyId) {
