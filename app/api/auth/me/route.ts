@@ -33,7 +33,9 @@ export async function GET(request: NextRequest) {
         email: user.email,
         mobile: user.mobile ? String(user.mobile) : "",
         name: user.name,
+        role: user.role || "BUSINESS",
         companyId: user.companyId,
+        customerId: user.customerId,
       },
       company,
     });

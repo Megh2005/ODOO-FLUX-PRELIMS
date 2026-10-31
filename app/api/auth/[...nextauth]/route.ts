@@ -32,7 +32,9 @@ export const authOptions: AuthOptions = {
           id: user._id.toString(),
           email: user.email,
           name: user.name,
+          role: user.role || "BUSINESS",
           companyId: user.companyId ? user.companyId.toString() : undefined,
+          customerId: user.customerId ? user.customerId.toString() : undefined,
         };
       },
     }),
@@ -45,13 +47,21 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.role = (user as any).role || "BUSINESS";
         token.companyId = (user as any).companyId;
+        token.customerId = (user as any).customerId;
       }
-      if (!token.companyId && token.id) {
+      if (token.id && (!token.role || (!token.companyId && token.role === "BUSINESS"))) {
         try {
           const dbUser = await User.findById(token.id).lean();
-          if (dbUser?.companyId) {
-            token.companyId = dbUser.companyId.toString();
+          if (dbUser) {
+            token.role = dbUser.role || "BUSINESS";
+            if (dbUser.companyId) {
+              token.companyId = dbUser.companyId.toString();
+            }
+            if (dbUser.customerId) {
+              token.customerId = dbUser.customerId.toString();
+            }
           }
         } catch (e) {}
       }
@@ -60,7 +70,9 @@ export const authOptions: AuthOptions = {
     async session({ session, token }) {
       if (token && session.user) {
         (session.user as any).id = token.id;
+        (session.user as any).role = token.role || "BUSINESS";
         (session.user as any).companyId = token.companyId;
+        (session.user as any).customerId = token.customerId;
       }
       return session;
     },
