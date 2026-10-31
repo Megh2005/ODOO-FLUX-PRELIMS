@@ -11,8 +11,8 @@ const robotoSlab = Roboto_Slab({
 });
 
 export const metadata: Metadata = {
-  title: "Manage-o-Pedia",
-  description: "Enterprise Inventory, Stock Lifecycle, Client Ledgers, and Invoicing Application",
+  title: "SUTRA",
+  description: "Enterprise Subscription Management, Inventory, Stock Lifecycle, Client Ledgers, and Invoicing Application",
 };
 
 export default function RootLayout({
