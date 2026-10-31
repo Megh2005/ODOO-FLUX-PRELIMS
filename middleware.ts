@@ -24,13 +24,10 @@ export function middleware(request: NextRequest) {
     request.cookies.get("next-auth.session-token")?.value ||
     request.cookies.get("__Secure-next-auth.session-token")?.value;
 
-  const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isAuthPage = pathname === "/login" || pathname === "/register" || pathname.startsWith("/reset-password");
   const isPublicPage = pathname === "/" || isAuthPage;
 
   if (session) {
-    if (isAuthPage) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
-    }
     return NextResponse.next();
   } else {
     if (!isPublicPage) {
@@ -48,6 +45,8 @@ export const config = {
     "/invoices/:path*",
     "/terms/:path*",
     "/setup-company/:path*",
+    "/portal/:path*",
     "/login",
+    "/reset-password/:path*",
   ],
 };

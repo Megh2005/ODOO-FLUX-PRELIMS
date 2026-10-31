@@ -33,8 +33,14 @@ export default function Header() {
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    const isPublicPage = pathname === "/" || pathname === "/login" || pathname === "/register" || pathname === "/setup-company";
-    if (isPublicPage) return;
+    const isExcludedPage =
+      pathname === "/" ||
+      pathname === "/login" ||
+      pathname === "/register" ||
+      pathname === "/setup-company" ||
+      pathname.startsWith("/portal") ||
+      pathname.startsWith("/reset-password");
+    if (isExcludedPage) return;
 
     fetch("/api/auth/me")
       .then((res) => {
@@ -48,6 +54,12 @@ export default function Header() {
       })
       .then((data) => {
         if (data && data.success) {
+          // If customer user enters business admin area, redirect to customer portal
+          if (data.user?.role === "CUSTOMER") {
+            router.push("/portal");
+            return;
+          }
+
           setCompanyName(data.company ? data.company.name : "Setup Company");
           setUserEmail(data.user.email);
           if (!data.company) {
@@ -67,8 +79,14 @@ export default function Header() {
     }
   };
 
-  const isPublicPage = pathname === "/" || pathname === "/login" || pathname === "/register" || pathname === "/setup-company";
-  if (isPublicPage) return null;
+  const isExcludedPage =
+    pathname === "/" ||
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/setup-company" ||
+    pathname.startsWith("/portal") ||
+    pathname.startsWith("/reset-password");
+  if (isExcludedPage) return null;
 
   return (
     <header className="w-full bg-slate-950/95 backdrop-blur-md text-white sticky top-0 z-40 border-b border-slate-800/80 shadow-lg">
