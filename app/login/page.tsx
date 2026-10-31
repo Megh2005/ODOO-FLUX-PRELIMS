@@ -3,7 +3,17 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { TbBuildingWarehouse, TbLock, TbMail, TbShieldCheck, TbUser, TbArrowLeft, TbPhone, TbEye, TbEyeOff } from "react-icons/tb";
+import {
+  TbBuildingWarehouse,
+  TbLock,
+  TbMail,
+  TbShieldCheck,
+  TbUser,
+  TbArrowLeft,
+  TbPhone,
+  TbEye,
+  TbEyeOff,
+} from "react-icons/tb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,7 +33,7 @@ export default function AuthPage() {
   const [password, setPassword] = useState("");
   const [otpDigits, setOtpDigits] = useState<string[]>(Array(6).fill(""));
   const [registrationToken, setRegistrationToken] = useState("");
-  
+
   // Registration step (1 = credentials form, 2 = OTP check)
   const [registerStep, setRegisterStep] = useState(1);
 
@@ -55,9 +65,13 @@ export default function AuthPage() {
 
       if (meData.success) {
         toast.success("Successfully signed in!");
-        
+
         // Trigger browser Credential Management API to save password prompt
-        if (typeof window !== "undefined" && "PasswordCredential" in window && (window as any).PasswordCredential) {
+        if (
+          typeof window !== "undefined" &&
+          "PasswordCredential" in window &&
+          (window as any).PasswordCredential
+        ) {
           try {
             const cred = new (window as any).PasswordCredential({
               id: email,
@@ -74,7 +88,9 @@ export default function AuthPage() {
         const targetPath = meData.company ? "/dashboard" : "/setup-company";
         window.location.href = targetPath;
       } else {
-        toast.error("Signed in successfully, but failed to retrieve user profile.");
+        toast.error(
+          "Signed in successfully, but failed to retrieve user profile.",
+        );
       }
     } catch (error: any) {
       toast.error("An error occurred during sign-in.");
@@ -143,7 +159,10 @@ export default function AuthPage() {
     }
   };
 
-  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleOtpKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (e.key === "Backspace") {
       const newDigits = [...otpDigits];
       if (!otpDigits[index] && index > 0) {
@@ -159,7 +178,11 @@ export default function AuthPage() {
 
   const handleOtpPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const pasteData = e.clipboardData.getData("text").trim().replace(/\D/g, "").slice(0, 6);
+    const pasteData = e.clipboardData
+      .getData("text")
+      .trim()
+      .replace(/\D/g, "")
+      .slice(0, 6);
     if (pasteData.length === 6) {
       const newDigits = pasteData.split("");
       setOtpDigits(newDigits);
@@ -186,7 +209,7 @@ export default function AuthPage() {
       const data = await response.json();
       if (data.success) {
         toast.success("Email verified and account registered!");
-        
+
         const loginResult = await signIn("credentials", {
           email,
           password,
@@ -194,13 +217,19 @@ export default function AuthPage() {
         });
 
         if (loginResult?.error) {
-          toast.error("Account created, but automatic sign-in failed. Please login manually.");
+          toast.error(
+            "Account created, but automatic sign-in failed. Please login manually.",
+          );
           setActiveTab("login");
           setRegisterStep(1);
           setOtpDigits(Array(6).fill(""));
         } else {
           // Trigger browser Credential Management API to save password prompt
-          if (typeof window !== "undefined" && "PasswordCredential" in window && (window as any).PasswordCredential) {
+          if (
+            typeof window !== "undefined" &&
+            "PasswordCredential" in window &&
+            (window as any).PasswordCredential
+          ) {
             try {
               const cred = new (window as any).PasswordCredential({
                 id: email,
@@ -234,14 +263,16 @@ export default function AuthPage() {
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 mb-1 border border-amber-500/20 group-hover:bg-amber-500/20 transition-all">
               <TbBuildingWarehouse className="w-6 h-6 text-amber-600 group-hover:scale-105 transition-transform" />
             </div>
-            <h1 className="text-lg font-black text-slate-900 tracking-tight group-hover:text-amber-600 transition-colors">Manage-o-Pedia</h1>
+            <h1 className="text-lg font-black text-slate-900  group-hover:text-amber-600 transition-colors">
+              SUTRA
+            </h1>
           </Link>
           <p className="text-[11px] font-medium text-slate-500">
             {activeTab === "login"
               ? "Sign in to access your business workspace"
               : registerStep === 2
-              ? "Verify email address"
-              : "Register your Manage-o-Pedia account"}
+                ? "Verify email address"
+                : "Register your SUTRA account"}
           </p>
         </div>
 
@@ -279,7 +310,12 @@ export default function AuthPage() {
           /* Sign In Form */
           <form onSubmit={handleLogin} className="space-y-3.5">
             <div className="space-y-1">
-              <Label htmlFor="login-email" className="text-slate-700 text-[10px] font-bold">Email Address</Label>
+              <Label
+                htmlFor="login-email"
+                className="text-slate-700 text-[10px] font-bold"
+              >
+                Email Address
+              </Label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
                   <TbMail className="w-3.5 h-3.5" />
@@ -299,7 +335,12 @@ export default function AuthPage() {
             </div>
 
             <div className="space-y-1">
-              <Label htmlFor="login-password" className="text-slate-700 text-[10px] font-bold">Password</Label>
+              <Label
+                htmlFor="login-password"
+                className="text-slate-700 text-[10px] font-bold"
+              >
+                Password
+              </Label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
                   <TbLock className="w-3.5 h-3.5" />
@@ -322,7 +363,11 @@ export default function AuthPage() {
                   tabIndex={-1}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? <TbEyeOff className="w-4 h-4" /> : <TbEye className="w-4 h-4" />}
+                  {showPassword ? (
+                    <TbEyeOff className="w-4 h-4" />
+                  ) : (
+                    <TbEye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -340,7 +385,12 @@ export default function AuthPage() {
           /* Sign Up Step 1: Input Credentials */
           <form onSubmit={handleSendOtp} className="space-y-3.5">
             <div className="space-y-1">
-              <Label htmlFor="register-name" className="text-slate-700 text-[10px] font-bold">Full Name</Label>
+              <Label
+                htmlFor="register-name"
+                className="text-slate-700 text-[10px] font-bold"
+              >
+                Full Name
+              </Label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
                   <TbUser className="w-3.5 h-3.5" />
@@ -360,7 +410,12 @@ export default function AuthPage() {
             </div>
 
             <div className="space-y-1">
-              <Label htmlFor="register-email" className="text-slate-700 text-[10px] font-bold">Email Address</Label>
+              <Label
+                htmlFor="register-email"
+                className="text-slate-700 text-[10px] font-bold"
+              >
+                Email Address
+              </Label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
                   <TbMail className="w-3.5 h-3.5" />
@@ -380,7 +435,12 @@ export default function AuthPage() {
             </div>
 
             <div className="space-y-1">
-              <Label htmlFor="register-mobile" className="text-slate-700 text-[10px] font-bold">Mobile Number (10 Digits)</Label>
+              <Label
+                htmlFor="register-mobile"
+                className="text-slate-700 text-[10px] font-bold"
+              >
+                Mobile Number (10 Digits)
+              </Label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
                   <TbPhone className="w-3.5 h-3.5" />
@@ -392,7 +452,9 @@ export default function AuthPage() {
                   placeholder="9876543210"
                   maxLength={10}
                   value={mobile}
-                  onChange={(e) => setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                  onChange={(e) =>
+                    setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))
+                  }
                   className="pl-9 h-9 text-xs bg-white border-slate-200 text-slate-900 placeholder-slate-400 rounded-lg focus:border-amber-500 focus:ring-amber-500 font-mono tracking-wider"
                   autoComplete="tel"
                   required
@@ -401,7 +463,12 @@ export default function AuthPage() {
             </div>
 
             <div className="space-y-1">
-              <Label htmlFor="register-password" className="text-slate-700 text-[10px] font-bold">Password</Label>
+              <Label
+                htmlFor="register-password"
+                className="text-slate-700 text-[10px] font-bold"
+              >
+                Password
+              </Label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 pointer-events-none">
                   <TbLock className="w-3.5 h-3.5" />
@@ -424,7 +491,11 @@ export default function AuthPage() {
                   tabIndex={-1}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? <TbEyeOff className="w-4 h-4" /> : <TbEye className="w-4 h-4" />}
+                  {showPassword ? (
+                    <TbEyeOff className="w-4 h-4" />
+                  ) : (
+                    <TbEye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -441,8 +512,18 @@ export default function AuthPage() {
         ) : (
           /* Sign Up Step 2: Input OTP */
           <form method="post" onSubmit={handleVerifyOtp} className="space-y-4">
-            <input type="hidden" name="username" value={email} autoComplete="username" />
-            <input type="hidden" name="password" value={password} autoComplete="new-password" />
+            <input
+              type="hidden"
+              name="username"
+              value={email}
+              autoComplete="username"
+            />
+            <input
+              type="hidden"
+              name="password"
+              value={password}
+              autoComplete="new-password"
+            />
             <div className="text-center pb-1">
               <p className="text-[10px] text-slate-500">
                 A verification code was sent to <strong>{email}</strong>
@@ -450,12 +531,16 @@ export default function AuthPage() {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-slate-700 text-[10px] font-bold block text-center">Verification Code</Label>
+              <Label className="text-slate-700 text-[10px] font-bold block text-center">
+                Verification Code
+              </Label>
               <div className="flex justify-between gap-1.5 max-w-[260px] mx-auto">
                 {otpDigits.map((digit, idx) => (
                   <input
                     key={idx}
-                    ref={(el) => { otpRefs.current[idx] = el; }}
+                    ref={(el) => {
+                      otpRefs.current[idx] = el;
+                    }}
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
